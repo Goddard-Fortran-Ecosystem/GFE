@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated git submodule URLs to relative URLs
 - Fixed typos in README
 
+## Added
+
+- Added GitHub Action to make a release tarball
+
 ## [1.0.3] - 2022-04-19
 
 ## Changed
