@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.2] - 2022-04-24
+
+### Fixed
+
+- Updated gFTL to include a bugfix.
+
 ## [1.1.1] - 2022-04-21
 
 ### Fixed
