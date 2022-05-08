@@ -5,6 +5,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2022-05-08
+
+### Changed
+
+- updated submodules
+  - gFTL v1.7.2
+  - yaFyaml v1.0.0 (now formally released.  No longer in beta.)
+  - pFlogger v1.9.0
+
+
+### Fixed
+
+- Includes yaFyaml update that has critical workarounds for compilers (mostly gFortran)
+
 ## [1.1.2] - 2022-04-24
 
 ### Fixed
