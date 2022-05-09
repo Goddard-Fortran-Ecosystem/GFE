@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 project (GFE
-  VERSION 1.1.2
+  VERSION 0.9.0
   LANGUAGES Fortran
 )
 cmake_policy(SET CMP0074 NEW)
