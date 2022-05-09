@@ -4,14 +4,14 @@ This repo is intended to be a single fixture for the [Goddard Fortran Ecosystem]
 
 ## Current versions
 
-| Package     | Version    |
-| :------     | :------    |
-| gFTL        | v1.7.0     |
-| gFTL-shared | v1.4.1     |
-| fArgParse   | v1.2.0     |
-| yaFyaml     | v1.0-beta8 |
-| pFlogger    | v1.8.0     |
-| pFUnit      | v4.2.7     |
+| Package     | Version      |
+| :------     | :------      |
+| gFTL        | v1.5.5       |
+| gFTL-shared | v1.3.6       |
+| fArgParse   | v1.1.2       |
+| yaFyaml     | v1.0-beta5.1 |
+| pFlogger    | v1.6.1       |
+| pFUnit      | v4.2.2       |
 
 ## Set up
 
