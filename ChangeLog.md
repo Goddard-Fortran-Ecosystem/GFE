@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2022-06-01
+
+### Fixed
+
+- Various - consult submodules;  mostly compiler workarounds.
+
 ## [1.2.0] - 2022-05-08
 
 ### Changed
