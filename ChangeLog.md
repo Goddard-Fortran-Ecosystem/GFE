@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1] - 2022-06-02
+
+### Changed
+
+- Botched the fArgParse commit in previous release.  (Minor, but SHA was not on GitHub so ...)
+
 ## [1.3.0] - 2022-06-01
 
 ### Fixed
