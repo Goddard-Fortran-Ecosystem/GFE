@@ -5,6 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2022-06-30
+
+### Changed
+
+- Updated rev of gFTL  to v1.8.1 (fix for documentation tool)
+- Updated rev of yaFyaml to v1.0.4 (better error handling and bugfix for anchors)
+
 ## [1.3.1] - 2022-06-02
 
 ### Changed
