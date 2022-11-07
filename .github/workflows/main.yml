@@ -1,0 +1,168 @@
+name: CI Tests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    # Do not run if the only files changed cannot affect the build
+    paths-ignore:
+      - "**.md"
+      - "**.MD"
+      - "LICENCE"
+      - "COPYRIGHT"
+
+jobs:
+  GNU:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ubuntu-22.04, macos-11, macos-12]
+        compiler: [gfortran-9, gfortran-10, gfortran-11, gfortran-12]
+        exclude:
+          - os: ubuntu-20.04
+            compiler: gfortran-11
+          - os: ubuntu-20.04
+            compiler: gfortran-12
+          - os: ubuntu-22.04
+            compiler: gfortran-9
+          - os: macos-11
+            compiler: gfortran-12
+          - os: macos-12
+            compiler: gfortran-9
+          - os: macos-12
+            compiler: gfortran-10
+          - os: macos-12
+            compiler: gfortran-12
+
+      # fail-fast if set to 'true' here is good for production, but when
+      # debugging, set to 'false'. fail-fast means if *any* ci test in the matrix fails
+      # GitHub Actions will stop any other test immediately. So good for production, bad
+      # when trying to figure something out. For more info see:
+      # https://www.edwardthomson.com/blog/github_actions_6_fail_fast_matrix_workflows.html
+
+      fail-fast: false
+    env:
+      FC: ${{ matrix.compiler }}
+      LANGUAGE: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      LC_TYPE: en_US.UTF-8
+      OMPI_ALLOW_RUN_AS_ROOT: 1
+      OMPI_ALLOW_RUN_AS_ROOT_CONFIRM: 1
+      OMPI_MCA_btl_vader_single_copy_mechanism: none
+
+    name: ${{ matrix.os }} / ${{ matrix.compiler }}
+    steps:
+      - name: Install GCC 12 on Ubuntu 22.04
+        if: matrix.os == 'ubuntu-22.04' && matrix.compiler == 'gfortran-12'
+        run: |
+          sudo apt-get install gfortran-12 -y
+      - name: Compiler Versions
+        run: |
+          ${FC} --version
+          cmake --version
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Cache MPI
+        id: cache-mpi
+        uses: actions/cache@v3
+        with:
+          path: ~/local/openmpi
+          key: mpi-${{ runner.os }}-${{ matrix.os }}-${{ matrix.compiler }}
+
+      # For some reason the GitHub Actions macOS image seems to have triggered
+      # a 7-year old bug: https://github.com/Homebrew/legacy-homebrew/issues/19046
+      # For now we only fix if MPI isn't cached already as it only seems important
+      # for OpenMPI
+
+      - name: Fix gmp and mpfr on macOS if MPI isn't cached
+        if: steps.cache-mpi.outputs.cache-hit != 'true' && matrix.os == 'macos-10.15'
+        run: |
+          brew reinstall --build-from-source gmp mpfr
+
+      - name: Build MPI
+        if: steps.cache-mpi.outputs.cache-hit != 'true'
+        run: |
+          sh ${GITHUB_WORKSPACE}/tools/ci-install-mpi.sh openmpi 4.1.4
+      - name: Set MPI Environment
+        run: |
+          echo "${HOME}/local/openmpi/bin" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=${HOME}/local/openmpi/lib" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=${HOME}/local/openmpi/lib" >> $GITHUB_ENV
+      - name: MPI Versions
+        run: |
+          ${FC} --version
+          mpirun --version
+          mpifort --show
+      - name: Build GFE
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          make -j$(nproc)
+      - name: Build Tests
+        run: |
+          cd build
+          make -j$(nproc) build-tests
+      - name: Run Tests
+        run: |
+          cd build
+          ctest -j1 --output-on-failure --repeat until-pass:4
+      - name: Archive log files on failure
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: logfiles
+          path: |
+            build/**/*.log
+
+
+  Intel:
+    runs-on: ubuntu-20.04
+
+    env:
+      FC: ifort
+      CC: icc
+
+    name: Intel Fortran
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Intel compilers
+        run: |
+          cd /tmp
+          wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+          sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+          rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+          sudo add-apt-repository "deb https://apt.repos.intel.com/oneapi all main"
+          sudo apt install --no-install-recommends intel-oneapi-compiler-fortran intel-oneapi-mpi \
+            intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic intel-oneapi-mpi-devel
+          source /opt/intel/oneapi/setvars.sh
+          printenv >> $GITHUB_ENV
+      - name: Versions
+        run: |
+          ${FC} --version
+          ${CC} --version
+          mpirun --version
+      - name: Build GFE
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          make -j$(nproc)
+      - name: Build Tests
+        run: |
+          cd build
+          make -j$(nproc) build-tests
+      - name: Run Tests
+        run: |
+          cd build
+          ctest -j1 --output-on-failure --repeat until-pass:4
+      - name: Archive log files on failure
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: logfiles
+          path: |
+            build/**/*.log
