@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated fArgParse to v1.4.0
+- Updated fArgParse to v1.4.1
+- Updated pFUnit to v4.5.0
+- Updated details in README
 
 ## [1.4.0] - 2022-06-30
 
