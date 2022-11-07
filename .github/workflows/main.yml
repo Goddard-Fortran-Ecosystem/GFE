@@ -100,7 +100,9 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake ..
+          cmake .. -DSKIP_OPENMP=ON
+          make -j$(nproc)
+          cmake .. -DSKIP_OPENMP=ON
           make -j$(nproc)
       - name: Build Tests
         run: |
@@ -153,7 +155,9 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake ..
+          cmake .. -DSKIP_OPENMP=ON
+          make -j$(nproc)
+          cmake .. -DSKIP_OPENMP=ON
           make -j$(nproc)
       - name: Build Tests
         run: |
