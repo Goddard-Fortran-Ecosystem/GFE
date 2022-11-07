@@ -101,9 +101,9 @@ jobs:
           mkdir -p build
           cd build
           cmake .. -DSKIP_OPENMP=ON
-          make -j$(nproc)
+          make -j$(nproc) install
           cmake .. -DSKIP_OPENMP=ON
-          make -j$(nproc)
+          make -j$(nproc) install
       - name: Build Tests
         run: |
           cd build
@@ -156,9 +156,9 @@ jobs:
           mkdir -p build
           cd build
           cmake .. -DSKIP_OPENMP=ON
-          make -j$(nproc)
+          make -j$(nproc) install
           cmake .. -DSKIP_OPENMP=ON
-          make -j$(nproc)
+          make -j$(nproc) install
       - name: Build Tests
         run: |
           cd build
