@@ -143,8 +143,8 @@ jobs:
           # add signed entry to apt sources and configure the APT client to use Intel repository:
           echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
           sudo apt update
-          sudo apt install intel-basekit
-          sudo apt install intel-hpckit
+          sudo apt install --no-install-recommends intel-oneapi-compiler-fortran intel-oneapi-mpi \
+            intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic intel-oneapi-mpi-devel
           source /opt/intel/oneapi/setvars.sh
           printenv >> $GITHUB_ENV
       - name: Versions
@@ -198,8 +198,8 @@ jobs:
           # add signed entry to apt sources and configure the APT client to use Intel repository:
           echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
           sudo apt update
-          sudo apt install intel-basekit
-          sudo apt install intel-hpckit
+          sudo apt install --no-install-recommends intel-oneapi-compiler-fortran intel-oneapi-mpi \
+            intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic intel-oneapi-mpi-devel
           source /opt/intel/oneapi/setvars.sh
           printenv >> $GITHUB_ENV
       - name: Versions
