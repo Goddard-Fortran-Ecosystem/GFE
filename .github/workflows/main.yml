@@ -121,14 +121,14 @@ jobs:
             build/**/*.log
 
 
-  Intel:
-    runs-on: ubuntu-20.04
+  IntelClassic:
+    runs-on: ubuntu-latest
 
     env:
       FC: ifort
       CC: icc
 
-    name: Intel Fortran
+    name: Intel Classic
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -138,12 +138,68 @@ jobs:
       - name: Install Intel compilers
         run: |
           cd /tmp
-          wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-          sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-          rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-          sudo add-apt-repository "deb https://apt.repos.intel.com/oneapi all main"
-          sudo apt install --no-install-recommends intel-oneapi-compiler-fortran intel-oneapi-mpi \
-            intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic intel-oneapi-mpi-devel
+          # download the key to system keyring
+          wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
+          # add signed entry to apt sources and configure the APT client to use Intel repository:
+          echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
+          sudo apt update
+          sudo apt install intel-basekit
+          sudo apt install intel-hpckit
+          source /opt/intel/oneapi/setvars.sh
+          printenv >> $GITHUB_ENV
+      - name: Versions
+        run: |
+          ${FC} --version
+          ${CC} --version
+          mpirun --version
+      - name: Build GFE
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DSKIP_OPENMP=ON
+          make -j$(nproc) install
+          cmake .. -DSKIP_OPENMP=ON
+          make -j$(nproc) install
+      - name: Build Tests
+        run: |
+          cd build
+          make -j$(nproc) build-tests
+      - name: Run Tests
+        run: |
+          cd build
+          ctest -j1 --output-on-failure --repeat until-pass:4
+      - name: Archive log files on failure
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: logfiles
+          path: |
+            build/**/*.log
+
+  IntelLLVM:
+    runs-on: ubuntu-latest
+
+    env:
+      FC: ifx
+      CC: icx
+
+    name: Intel LLVM
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          submodules: true
+      - name: Install Intel compilers
+        run: |
+          cd /tmp
+          # download the key to system keyring
+          wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
+          # add signed entry to apt sources and configure the APT client to use Intel repository:
+          echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
+          sudo apt update
+          sudo apt install intel-basekit
+          sudo apt install intel-hpckit
           source /opt/intel/oneapi/setvars.sh
           printenv >> $GITHUB_ENV
       - name: Versions
