@@ -155,9 +155,9 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake .. -DSKIP_OPENMP=ON
+          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install
           make -j$(nproc) install
-          cmake .. -DSKIP_OPENMP=ON
+          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install
           make -j$(nproc) install
       - name: Build Tests
         run: |
