@@ -5,6 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.0] - 2022-11-15
+
+### Changed
+
+- Change behavior if user does not pass in `CMAKE_INSTALL_PREFIX` to put install directory inside build (as we are know we can
+  write there; default for CMake install is `/usr/local`)
+
 ## [1.7.0] - 2022-11-15
 
 ### Changed
