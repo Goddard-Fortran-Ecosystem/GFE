@@ -5,12 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.9.0] - 2023-01-24
+## [1.9.0] - 2023-01-27
 
 ### Fixed
 
 - Fixes for GNU Make builds
-  - Update gFTL to v1.8.2
+  - Update gFTL to v1.8.3
   - Update gFTL-shared to v1.5.1
   - Update fArgParse to v1.4.2
   - Update pFUnit to v4.6.2
