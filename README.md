@@ -16,6 +16,7 @@ This repo is intended to be a single fixture for the [Goddard Fortran Ecosystem]
 ## Set up
 
 Clone the repository and update the submodules. Note that the `--recursive` flag to `git submodule update` is not required:
+
 ```console
 $ git clone https://github.com/Goddard-Fortran-Ecosystem/GFE.git
 $ cd GFE
