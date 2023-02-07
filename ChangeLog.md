@@ -5,17 +5,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.9.0] - 2023-01-27
+## [1.9.0] - 2023-02-07
 
 ### Fixed
 
-- Fixes for GNU Make builds
-  - Update gFTL to v1.8.3
-  - Update gFTL-shared to v1.5.1
-  - Update fArgParse to v1.4.2
-  - Update pFUnit to v4.6.2
-  - Update yaFyaml to v1.0.5
-  - Update pFlogger to v1.9.2
+- Update gFTL to v1.8.3
+  - Fixes for GNU Make builds
+  - Missing `KIND=` on `size()` procedure. Gave incorrect response for large containers. Only affects V1 containers.
+- Update gFTL-shared to v1.5.1
+  - Fixes for GNU Make builds
+- Update fArgParse to v1.4.2
+  - Fixes for GNU Make builds
+- Update pFUnit to v4.6.3
+  - Fix for compilers that do not support 128 bit reals
+  - Fixed build_submodule for old git versions
+  - Fixed for use with FetchContent
+  - Fix CMake logic in `add_pfunit_ctest.cmake` for `MPIEXEC_EXECUTABLE`. Problem not exposed by common MPI flavors which use `mpirun`
+  - Fix GitHub CI workflow by pinning to CMake 3.24.3
+  - Fixes for GNU Make builds
+  - Update fArgParse submodule to v1.4.2
+  - Fix `pFUnitParser.py` in cases where there is no module name
+- Update yaFyaml to v1.0.7
+  - Workaround for NVIDIA compiler
+  - Fixes for GNU Make builds
+  - Workarounds for Intel 2021.7
+  - Out of date examples have been updated
+- Update pFlogger to v1.9.3
+  - Fixes for GNU Make builds
+  - Package was incorrectly assuming that all extant compilers support 128 bit reals. Now a check is performed to optionally include support for 128 bit reals.
+  - Fix `Parser()` declaration for Intel 2021.7
 
 ## [1.8.0] - 2022-11-15
 
