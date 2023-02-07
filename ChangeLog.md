@@ -24,7 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixes for GNU Make builds
   - Update fArgParse submodule to v1.4.2
   - Fix `pFUnitParser.py` in cases where there is no module name
-- Update yaFyaml to v1.0.6
+- Update yaFyaml to v1.0.7
+  - Workaround for NVIDIA compiler
   - Fixes for GNU Make builds
   - Workarounds for Intel 2021.7
   - Out of date examples have been updated
