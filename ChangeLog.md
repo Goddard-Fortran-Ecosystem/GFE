@@ -5,6 +5,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.0] - 2023-04-17
+
+### Changed
+
+- Update gFTL to v1.10.0
+  - Added `IntelLLVM.cmake` file as a copy of `Intel.cmake` to support the LLVM Intel compiler frontends
+    (Note - this has not been tested due to lack of system access.)
+  - Added Fortran-friendly iterator factories (and tests)
+- Update gFTL-shared to v1.6.0
+  - Added `IntelLLVM.cmake` file as a copy of `Intel.cmake` to support the LLVM Intel compiler frontends
+  - Updated gFTL submodule to v1.10.0
+- Update fArgParse to v1.5.0
+  - Added `IntelLLVM.cmake` file as a copy of `Intel.cmake` to support the LLVM Intel compiler frontends
+  - Updated submodules for gFTL-shared (v1.6.0)
+  - implemented workaround for GFortran which was not correctly handling
+    deferred-length allocatable string arrays.  Used StringVector instead.
+- Update pFUnit to v4.7.0
+  - Update fArgParse submodule to v1.5.0
+  - Added IntelLLVM.cmake to support ifx
+  - Added interface for `@asertEquals` for arrays of strings.   Previously only string scalars could be compared.
+  - Added check in pFUnit preprocessor that raises an exception if the module name and filename do not agree unless `@suite` is used to override default assumptions.
+  - Added option to set labels to ctests
+  - Added changelog enforcer GitHub Action
+  - `--verbose option` is now passed through by ctest runner
+  - Converted GitHub CI to use cmake abstract build commands
+- Update yaFyaml to v1.1.0
+  - Added `IntelLLVM.cmake` file as a copy of `Intel.cmake` to support the LLVM Intel compiler frontends
+  - Updated required gFTL version to v1.10.0
+  - Updated required gFTL-shared version to v1.6.0
+- Update pFlogger to v1.10.0
+  - Added `IntelLLVM.cmake` file as a copy of `Intel.cmake` to support the LLVM Intel compiler frontends
+  - Updated required version of gFTL to v1.10.0
+  - Updated required version of gFTL-shared to v1.6.0
+  - Updated required version of yaFyaml to v1.1.0
+
 ### Added
 
 - Add GitHub Actions CI
