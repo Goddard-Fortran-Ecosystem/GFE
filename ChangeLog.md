@@ -5,6 +5,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.0] - 2023-07-21
+
+### Changed
+
+- Update gFTL-shared to v1.6.1
+  - Fixed issue where the names of some iterators for containers were not being correctly named.  E.g., StringSetIterator was only named SetIterator.
+- Update pFUnit to v4.7.3
+  - Fixed cmake issue where target "pfunit-mpi-defines" is defined more than once
+  - Missing variable declaration in parameterized test case boiler plate code.
+
 ## [1.10.0] - 2023-04-17
 
 ### Changed
