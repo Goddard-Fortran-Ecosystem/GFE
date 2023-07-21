@@ -5,6 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.0] - 2023-07-21
+
+### Changed
+
+- Update gFTL-shared to v1.6.1
+  - Fixed issue where the names of some iterators for containers were not being correctly named.  E.g., StringSetIterator was only named SetIterator.
+
 ## [1.10.0] - 2023-04-17
 
 ### Changed
