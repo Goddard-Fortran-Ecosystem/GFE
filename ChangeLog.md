@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.12.0] - 2023-11-29
+
+- Updated submodules for all repos. (See README)
+
 ## [1.11.0] - 2023-07-21
 
 ### Changed
