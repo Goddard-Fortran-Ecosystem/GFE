@@ -5,7 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update CI to use Intel LLVM
+
 ## [1.12.0] - 2023-11-29
+
+### Changed
 
 - Updated submodules for all repos. (See README)
 
