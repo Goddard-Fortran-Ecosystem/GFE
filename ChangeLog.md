@@ -5,6 +5,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Update gFTL to v1.12.0
+  - Fujitsu compiler support (and other minor bugfixes)
+- Update gFTL-shared to v1.8.0
+  - Fujitsu compiler support
+- Update fArgParse to v1.7.0
+  - Fujitsu compiler support
+  - Update to Apache 2.0 license
+- Update pFUnit to v4.9.0
+  - Fujitsu compiler support
+- Update yaFyaml to v1.1.0
+  - Fujitsu compiler support
+  - GCC 13 fixes
+- Update pFlogger to v1.10.0
+  - Fujitsu compiler support
+  - GCC 13 fixes
+
 ## [1.12.0] - 2023-11-29
 
 - Updated submodules for all repos. (See README)
