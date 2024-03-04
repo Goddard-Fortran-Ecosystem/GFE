@@ -52,6 +52,7 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
+
       - name: Set all directories as git safe
         run: |
           git config --global --add safe.directory '*'
@@ -114,6 +115,9 @@ jobs:
           fetch-depth: 1
           submodules: true
 
+      - name: Set all directories as git safe
+        run: |
+          git config --global --add safe.directory '*'
       - name: Setup Intel oneAPI repository
         run: |
           wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
@@ -141,6 +145,7 @@ jobs:
           ${FC} --version
           ${CC} --version
           mpirun --version
+
       - name: Build GFE
         run: |
           mkdir -p build
@@ -149,10 +154,12 @@ jobs:
           make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
           cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
           make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
+
       - name: Build and Run Tests
         run: |
           cd build
           make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) tests
+
       - name: Archive log files on failure
         uses: actions/upload-artifact@v4
         if: failure()
@@ -160,3 +167,54 @@ jobs:
           name: logfiles
           path: |
             build/**/*.log
+
+  Nvidia:
+    runs-on: ubuntu-20.04
+    container: nvcr.io/nvidia/nvhpc:24.1-devel-cuda12.3-ubuntu22.04
+    env:
+      FC: nvfortran
+
+    name: Nvidia HPC
+    steps:
+      - name: Versions
+        run: |
+          ${FC} --version
+          cmake --version
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: Set all directories as git safe
+        run: |
+          git config --global --add safe.directory '*'
+
+      - name: Add python-is-python3 package
+        run: |
+          apt-get update
+          apt-get install -y python-is-python3
+
+      - name: Build GFE
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
+          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
+
+      - name: Build and Run Tests
+        run: |
+          cd build
+          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) tests
+
+      - name: Archive log files on failure
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: logfiles
+          path: |
+            build/**/*.log
+
