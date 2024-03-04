@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.13.0] - 2024-03-XX
+
 - Update gFTL to v1.12.0
   - Fujitsu compiler support (and other minor bugfixes)
 - Update gFTL-shared to v1.8.0
