@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.13.0] - 2024-03-XX
 
+### Changed
+
 - Update gFTL to v1.12.0
   - Fujitsu compiler support (and other minor bugfixes)
 - Update gFTL-shared to v1.8.0
@@ -22,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update pFlogger to v1.10.0
   - Fujitsu compiler support
   - GCC 13 fixes
+- Update CI to use Intel LLVM
 
 ## [1.12.0] - 2023-11-29
 
