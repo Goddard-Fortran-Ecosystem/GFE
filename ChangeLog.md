@@ -19,10 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update pFUnit to v4.9.0
   - Fujitsu compiler support
   - Some bug fixes
-- Update yaFyaml to v1.1.0
+- Update yaFyaml to v1.3.0
   - Fujitsu compiler support
   - GCC 13 fixes
-- Update pFlogger to v1.10.0
+- Update pFlogger to v1.13.1
   - Fujitsu compiler support
   - GCC 13 fixes
 - Update CI to use Intel LLVM

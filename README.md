@@ -11,7 +11,7 @@ This repo is intended to be a single fixture for the [Goddard Fortran Ecosystem]
 | fArgParse   | v1.7.0     |
 | pFUnit      | v4.9.0     |
 | yaFyaml     | v1.3.0     |
-| pFlogger    | v1.12.0    |
+| pFlogger    | v1.13.1    |
 
 ## Set up
 
