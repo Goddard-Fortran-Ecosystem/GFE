@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.13.0] - 2024-03-XX
+## [1.13.0] - 2024-03-07
 
 ### Changed
 
@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update to Apache 2.0 license
 - Update pFUnit to v4.9.0
   - Fujitsu compiler support
+  - Some bug fixes
 - Update yaFyaml to v1.1.0
   - Fujitsu compiler support
   - GCC 13 fixes
