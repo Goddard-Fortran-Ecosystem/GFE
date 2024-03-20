@@ -5,6 +5,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.14.0] - 2024-03-20
+
+### Changed
+
+- Update gFTL to v1.13.0
+  - ifx port
+- Update pFlogger to v1.13.2
+  - Bug fix
+- Removed `macos-11` from CI as it is deprecated. Add `macos-13`
+
 ## [1.13.0] - 2024-03-07
 
 ### Changed
