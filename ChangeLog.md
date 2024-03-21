@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Move to NVHPC 24.3 in CI
+
 ## [1.14.0] - 2024-03-20
 
 ### Changed
