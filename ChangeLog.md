@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update CI to remove `macos-12` and add `macos-14`, `ubuntu-24.04`
+
 ## [1.15.0] - 2024-03-26
 
 ### Changed
