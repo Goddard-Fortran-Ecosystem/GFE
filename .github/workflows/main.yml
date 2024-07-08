@@ -15,13 +15,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-22.04, macos-12, macos-13]
-        compiler: [gfortran-10, gfortran-11, gfortran-12, gfortran-13]
+        os: [ubuntu-22.04, ubuntu-24.04, macos-13, macos-14]
+        compiler: [gfortran-11, gfortran-12, gfortran-13]
+        # gfortran-10 is only on ubuntu-22.04
+        # gfortran-14 is available on ubuntu-24.04
+        include:
+          - os: ubuntu-22.04
+            compiler: gfortran-10
+          - os: ubuntu-24.04
+            compiler: gfortran-14
         exclude:
-          - os: macos-12
-            compiler: gfortran-10
-          - os: macos-13
-            compiler: gfortran-10
+          - os: ubuntu-24.04
+            compiler: gfortran-11
+          - os: ubuntu-22.04
+            compiler: gfortran-13
 
       # fail-fast if set to 'true' here is good for production, but when
       # debugging, set to 'false'. fail-fast means if *any* ci test in the matrix fails
@@ -80,18 +87,20 @@ jobs:
           ${FC} --version
           mpirun --version
           mpifort --show
-      - name: Build GFE
+
+      - name: Build and Install GFE
         run: |
-          mkdir -p build
-          cd build
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
-      - name: Build and Run Tests
-        run: |
-          cd build
-          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) tests
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
+
+      - name: Build Tests
+        run: cmake --build build --parallel 4 -target build-tests -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+
+      - name: Run Tests
+        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4 --schedule-random
+
       - name: Archive log files on failure
         uses: actions/upload-artifact@v4
         if: failure()
@@ -118,6 +127,7 @@ jobs:
       - name: Set all directories as git safe
         run: |
           git config --global --add safe.directory '*'
+
       - name: Setup Intel oneAPI repository
         run: |
           wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
@@ -145,20 +155,20 @@ jobs:
           ${FC} --version
           ${CC} --version
           mpirun --version
+          cmake --version
 
-      - name: Build GFE
+      - name: Build and Install GFE
         run: |
-          mkdir -p build
-          cd build
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
 
-      - name: Build and Run Tests
-        run: |
-          cd build
-          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) tests
+      - name: Build Tests
+        run: cmake --build build --parallel 4 -target build-tests -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+
+      - name: Run Tests
+        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4 --schedule-random
 
       - name: Archive log files on failure
         uses: actions/upload-artifact@v4
@@ -196,19 +206,18 @@ jobs:
           apt-get update
           apt-get install -y python-is-python3
 
-      - name: Build GFE
+      - name: Build and Install GFE
         run: |
-          mkdir -p build
-          cd build
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
 
-      - name: Build and Run Tests
-        run: |
-          cd build
-          make -j$(nproc 2>/dev/null || sysctl -n hw.logicalcpu) tests
+      - name: Build Tests
+        run: cmake --build build --parallel 4 -target build-tests -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+
+      - name: Run Tests
+        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4 --schedule-random
 
       - name: Archive log files on failure
         uses: actions/upload-artifact@v4
