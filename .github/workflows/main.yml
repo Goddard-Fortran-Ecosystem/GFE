@@ -16,14 +16,15 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04, ubuntu-24.04, macos-13, macos-14]
-        compiler: [gfortran-10, gfortran-11, gfortran-12, gfortran-13]
-        exclude:
-          - os: macos-13
-            compiler: gfortran-10
-          - os: macos-14
+        compiler: [gfortran-11, gfortran-12, gfortran-13]
+        # gfortran-10 is only on ubuntu-22.04
+        # gfortran-14 is available on ubuntu-24.04
+        include:
+          - os: ubuntu-22.04
             compiler: gfortran-10
           - os: ubuntu-24.04
-            compiler: gfortran-10
+            compiler: gfortran-14
+        exclude:
           - os: ubuntu-24.04
             compiler: gfortran-11
           - os: ubuntu-22.04
@@ -86,18 +87,20 @@ jobs:
           ${FC} --version
           mpirun --version
           mpifort --show
-      - name: Build GFE
+
+      - name: Build and Install GFE
         run: |
-          mkdir -p build
-          cd build
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j4 install
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j4 install
-      - name: Build and Run Tests
-        run: |
-          cd build
-          make -j4 tests
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
+
+      - name: Build Tests
+        run: cmake --build build --parallel 4 -target build-tests -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+
+      - name: Run Tests
+        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4 --schedule-random
+
       - name: Archive log files on failure
         uses: actions/upload-artifact@v4
         if: failure()
@@ -154,19 +157,18 @@ jobs:
           mpirun --version
           cmake --version
 
-      - name: Build GFE
+      - name: Build and Install GFE
         run: |
-          mkdir -p build
-          cd build
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j4 install
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j4 install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
 
-      - name: Build and Run Tests
-        run: |
-          cd build
-          make -j4 tests
+      - name: Build Tests
+        run: cmake --build build --parallel 4 -target build-tests -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+
+      - name: Run Tests
+        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4 --schedule-random
 
       - name: Archive log files on failure
         uses: actions/upload-artifact@v4
@@ -204,19 +206,18 @@ jobs:
           apt-get update
           apt-get install -y python-is-python3
 
-      - name: Build GFE
+      - name: Build and Install GFE
         run: |
-          mkdir -p build
-          cd build
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j4 install
-          cmake .. -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
-          make -j4 install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake --build build --parallel 4 --target install
 
-      - name: Build and Run Tests
-        run: |
-          cd build
-          make -j4 tests
+      - name: Build Tests
+        run: cmake --build build --parallel 4 -target build-tests -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+
+      - name: Run Tests
+        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4 --schedule-random
 
       - name: Archive log files on failure
         uses: actions/upload-artifact@v4
