@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added support for non-poly allocatable containers
 - Update gFTL-shared to v1.9.0
   - Misc minor updates
+- Update fArgParse to v1.8.0
+  - Minor updates
 - Update CI to match that of pFUnit
   - Remove `macos-11` from GitHub Actions, add `macos-12` and `gfortran-14` to Ubuntu 24.04
 - Update CI to NVHPC 24.5
