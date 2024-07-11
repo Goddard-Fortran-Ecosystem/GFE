@@ -5,6 +5,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.16.0] - 2024-07-10
+
+### Changed
+
+- Update gFTL to v1.14.0
+  - Added support for non-poly allocatable containers
+- Update gFTL-shared to v1.9.0
+  - Misc minor updates
+- Update fArgParse to v1.8.0
+  - Minor updates
+- Update yaFyaml to v1.4.0
+  - Workaround for gfortran 13.3 and minor updates to CI
+- Update pFUinit to v4.10.0
+  - Migrated to use v2 interfaces from gFTL
+- Update CI to match that of pFUnit
+  - Remove `macos-11` from GitHub Actions, add `macos-12` and `gfortran-14` to Ubuntu 24.04
+- Update CI to NVHPC 24.5
+
 ## [1.15.0] - 2024-03-26
 
 ### Changed
