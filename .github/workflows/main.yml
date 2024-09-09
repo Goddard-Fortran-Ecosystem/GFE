@@ -212,9 +212,9 @@ jobs:
 
       - name: Build and Install GFE
         run: |
-          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install -DSKIP_ROBUST=YES
           cmake --build build --parallel 4 --target install
-          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install -DSKIP_ROBUST=YES
           cmake --build build --parallel 4 --target install
 
       - name: Build and Run Tests target
