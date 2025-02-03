@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update pFlogger to v1.15.0
   - Flang support
 
+- Update CI to have `gfortran-10` and `gfortran-11` only on `ubuntu-22.04`
+- Update CI NVIDIA to NVHPC 24.7
+- Add Flang to CI
+
 ## [1.16.0] - 2024-07-10
 
 ### Changed
