@@ -5,6 +5,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.17.0] - 2025-02-03
+
+### Changed
+
+- Update gFTL to v1.15.0
+  - New variant of Set container (compiler workaround)
+- Update gFTL-shared to v1.10.0
+  - Added support for LLVMFlang
+- Update fArgParse to v1.9.0
+  - LLVMFlang support and misc workarounds
+- Update pFUnit to v4.11.0
+  - Misc updates (support for Flang)
+- Update yaFyaml to v1.5.0
+  - Flang support
+- Update pFlogger to v1.15.0
+  - Flang support
+
 ## [1.16.0] - 2024-07-10
 
 ### Changed
