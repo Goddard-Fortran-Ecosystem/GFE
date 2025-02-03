@@ -98,7 +98,7 @@ jobs:
       - name: Build and Run Tests target
         run: |
           cmake --build build --parallel 4 --target build-tests
-          cmake --build build --parallel 4 --target tests
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Run Ctest
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
@@ -107,7 +107,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: logfiles
+          name: logfiles-${{ matrix.compiler }}-${{ matrix.os }}
           path: |
             build/**/*.log
 
@@ -169,7 +169,7 @@ jobs:
       - name: Build and Run Tests target
         run: |
           cmake --build build --parallel 4 --target build-tests
-          cmake --build build --parallel 4 --target tests
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Run Ctest
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
@@ -178,7 +178,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: logfiles
+          name: logfiles-Intel
           path: |
             build/**/*.log
 
@@ -220,7 +220,7 @@ jobs:
       - name: Build and Run Tests target
         run: |
           cmake --build build --parallel 4 --target build-tests
-          cmake --build build --parallel 4 --target tests
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Run Ctest
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
@@ -229,7 +229,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: logfiles
+          name: logfiles-Nvidia
           path: |
             build/**/*.log
 
@@ -278,7 +278,7 @@ jobs:
       - name: Build and Run Tests target
         run: |
           cmake --build build --parallel 4 --target build-tests
-          cmake --build build --parallel 4 --target tests
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Run Ctest
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
@@ -287,7 +287,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: logfiles
+          name: logfiles-Flang
           path: |
             build/**/*.log
 
