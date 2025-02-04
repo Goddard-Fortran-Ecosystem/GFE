@@ -5,18 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.18.0] - 2025-02-04
+## [1.17.0] - 2025-02-04
 
 ### Changed
 
 - Update gFTL to v1.15.1
-  - Workaround for gfortran to pass CI
-
-## [1.17.0] - 2025-02-03
-
-### Changed
-
-- Update gFTL to v1.15.0
   - New variant of Set container (compiler workaround)
 - Update gFTL-shared to v1.10.0
   - Added support for LLVMFlang
