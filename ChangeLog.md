@@ -5,6 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.18.0] - 2025-02-04
+
+### Changed
+
+- Update gFTL to v1.15.1
+  - Workaround for gfortran to pass CI
+
 ## [1.17.0] - 2025-02-03
 
 ### Changed
