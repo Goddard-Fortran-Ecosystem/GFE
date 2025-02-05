@@ -17,13 +17,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - LLVMFlang support and misc workarounds
 - Update pFUnit to v4.11.1
   - Misc updates (support for Flang) and gfortran workarounds
-- Update yaFyaml to v1.5.0
+- Update yaFyaml to v1.5.1
   - Flang support
+  - Workaround for `ifx`
 - Update pFlogger to v1.15.0
   - Flang support
 - Update CI to have `gfortran-10` and `gfortran-11` only on `ubuntu-22.04`
 - Update CI NVIDIA to NVHPC 24.7
 - Add Flang to CI
+- Removed `macos-13` from CI, use `macos-14`
 
 ## [1.16.0] - 2024-07-10
 
