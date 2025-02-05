@@ -15,8 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added support for LLVMFlang
 - Update fArgParse to v1.9.0
   - LLVMFlang support and misc workarounds
-- Update pFUnit to v4.11.0
-  - Misc updates (support for Flang)
+- Update pFUnit to v4.11.1
+  - Misc updates (support for Flang) and gfortran workarounds
 - Update yaFyaml to v1.5.0
   - Flang support
 - Update pFlogger to v1.15.0
