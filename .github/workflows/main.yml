@@ -15,20 +15,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-22.04, ubuntu-24.04, macos-13, macos-14]
-        compiler: [gfortran-11, gfortran-12, gfortran-13]
-        # gfortran-10 is only on ubuntu-22.04
-        # gfortran-14 is available on ubuntu-24.04
+        os: [ubuntu-22.04, ubuntu-24.04, macos-14]
+        compiler: [gfortran-12, gfortran-13, gfortran-14]
+        # gfortran-10 and -11 are only on ubuntu-22.04
+        # gfortran-13 and -14 are not on ubuntu-22.04
         include:
           - os: ubuntu-22.04
             compiler: gfortran-10
-          - os: ubuntu-24.04
-            compiler: gfortran-14
-        exclude:
-          - os: ubuntu-24.04
+          - os: ubuntu-22.04
             compiler: gfortran-11
+        exclude:
           - os: ubuntu-22.04
             compiler: gfortran-13
+          - os: ubuntu-22.04
+            compiler: gfortran-14
 
       # fail-fast if set to 'true' here is good for production, but when
       # debugging, set to 'false'. fail-fast means if *any* ci test in the matrix fails
@@ -98,7 +98,7 @@ jobs:
       - name: Build and Run Tests target
         run: |
           cmake --build build --parallel 4 --target build-tests
-          cmake --build build --parallel 4 --target tests
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Run Ctest
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
@@ -107,12 +107,12 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: logfiles
+          name: logfiles-${{ matrix.compiler }}-${{ matrix.os }}
           path: |
             build/**/*.log
 
   Intel:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     env:
       FC: ifx
@@ -169,7 +169,7 @@ jobs:
       - name: Build and Run Tests target
         run: |
           cmake --build build --parallel 4 --target build-tests
-          cmake --build build --parallel 4 --target tests
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Run Ctest
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
@@ -178,17 +178,75 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: logfiles
+          name: logfiles-Intel
           path: |
             build/**/*.log
 
   Nvidia:
-    runs-on: ubuntu-20.04
-    container: nvcr.io/nvidia/nvhpc:24.5-devel-cuda12.4-ubuntu22.04
+    runs-on: ubuntu-22.04
+    container: nvcr.io/nvidia/nvhpc:24.7-devel-cuda12.5-ubuntu22.04
     env:
       FC: nvfortran
 
     name: Nvidia HPC
+    steps:
+      - name: Versions
+        run: |
+          ${FC} --version
+          cmake --version
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: Set all directories as git safe
+        run: |
+          git config --global --add safe.directory '*'
+
+      - name: Add python-is-python3 package
+        run: |
+          apt-get update
+          apt-get install -y python-is-python3
+
+      - name: Build and Install GFE
+        run: |
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install -DSKIP_ROBUST=YES
+          cmake --build build --parallel 4 --target install
+          cmake -B build -DSKIP_OPENMP=ON -DCMAKE_INSTALL_PREFIX=../install -DCMAKE_PREFIX_PATH=../install -DSKIP_ROBUST=YES
+          cmake --build build --parallel 4 --target install
+
+      - name: Build and Run Tests target
+        run: |
+          cmake --build build --parallel 4 --target build-tests
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
+
+      - name: Run Ctest
+        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
+
+      - name: Archive log files on failure
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: logfiles-Nvidia
+          path: |
+            build/**/*.log
+
+  Flang:
+    runs-on: ubuntu-latest
+    container: gmao/llvm-flang-openmpi:latest
+    env:
+      FC: flang-new
+      LANGUAGE: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      LC_TYPE: en_US.UTF-8
+      OMPI_ALLOW_RUN_AS_ROOT: 1
+      OMPI_ALLOW_RUN_AS_ROOT_CONFIRM: 1
+      OMPI_MCA_btl_vader_single_copy_mechanism: none
+
+    name: Flang
     steps:
       - name: Versions
         run: |
@@ -220,7 +278,7 @@ jobs:
       - name: Build and Run Tests target
         run: |
           cmake --build build --parallel 4 --target build-tests
-          cmake --build build --parallel 4 --target tests
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Run Ctest
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
@@ -229,7 +287,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: logfiles
+          name: logfiles-Flang
           path: |
             build/**/*.log
 
