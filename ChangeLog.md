@@ -5,6 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.18.0] - 2025-02-06
+
+- Update pFlogger  to v1.16.1
+  - Revert use of `c_bool`
+
+### Changed
+
 ## [1.17.0] - 2025-02-04
 
 ### Changed
@@ -20,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update yaFyaml to v1.5.1
   - Flang support
   - Workaround for `ifx`
-- Update pFlogger to v1.15.0
+- Update pFlogger to v1.16.0
   - Flang support
 - Update CI to have `gfortran-10` and `gfortran-11` only on `ubuntu-22.04`
 - Update CI NVIDIA to NVHPC 24.7
