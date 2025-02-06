@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.18.0] - 2025-02-06
 
+### Changed
+
 - Update pFlogger  to v1.16.1
   - Revert use of `c_bool`
-
-### Changed
 
 ## [1.17.0] - 2025-02-04
 
