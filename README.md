@@ -6,7 +6,7 @@ This repo is intended to be a single fixture for the [Goddard Fortran Ecosystem]
 
 | Package     | Version    |
 | :------     | :------    |
-| gFTL        | v1.15.1    |
+| gFTL        | v1.15.2    |
 | gFTL-shared | v1.10.0    |
 | fArgParse   | v1.9.0     |
 | pFUnit      | v4.11.1    |

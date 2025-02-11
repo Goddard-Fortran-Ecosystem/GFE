@@ -5,11 +5,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.19.0] - 2025-02-11
+
+### Changed
+
+- Update gFTL to v1.15.2
+  - Eliminate debug prints
+
 ## [1.18.0] - 2025-02-06
 
 ### Changed
 
-- Update pFlogger  to v1.16.1
+- Update pFlogger to v1.16.1
   - Revert use of `c_bool`
 
 ## [1.17.0] - 2025-02-04
