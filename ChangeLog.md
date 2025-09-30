@@ -5,6 +5,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.20.0] - 2025-09-30
+
+### Changed
+
+- Update gFTL to v1.16.0
+  - Require CMake 3.24
+  - Updates for Windows Support
+- Update gFTL-shared to v1.11.0
+  - Update gFTL to v1.16.0
+  - Require CMake 3.24
+- Update fArgParse to v1.10.0
+  - Update gFTL-shared to v1.11.0
+  - Require CMake 3.24
+- Update pFUnit to v4.13.0
+  - Update fArgParse to v1.10.0
+  - Bug fixes for ifx 2025.2
+  - Updated support for Windows
+  - Require CMake 3.24
+- Update yaFyaml to v1.6.0
+  - Support for ifx 2025.2
+  - Require CMake 3.24
+  - Update gFTL requirement to v1.16.0
+  - Update gFTL-shared requirement to v1.11.0
+- Update pFlogger to v1.17.0
+  - Workaround for ifx 2025.2
+  - Require CMake 3.24
+  - Update gFTL requirement to v1.16.0
+  - Update gFTL-shared requirement to v1.11.0
+  - Update yaFyaml requirement to v1.6.0
+- Remove `macos-13` from CI, add `macos-15`
+- Add `gfortran-15` to macOS CI
+- Update CMake minimum version to 3.24
+
 ## [1.19.0] - 2025-02-11
 
 ### Changed
