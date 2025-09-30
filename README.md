@@ -6,12 +6,12 @@ This repo is intended to be a single fixture for the [Goddard Fortran Ecosystem]
 
 | Package     | Version    |
 | :------     | :------    |
-| gFTL        | v1.15.2    |
-| gFTL-shared | v1.10.0    |
-| fArgParse   | v1.9.0     |
-| pFUnit      | v4.11.1    |
-| yaFyaml     | v1.5.1     |
-| pFlogger    | v1.16.1    |
+| gFTL        | v1.16.0    |
+| gFTL-shared | v1.11.0    |
+| fArgParse   | v1.10.0    |
+| pFUnit      | v4.13.0    |
+| yaFyaml     | v1.6.0     |
+| pFlogger    | v1.17.0    |
 
 ## Set up
 
