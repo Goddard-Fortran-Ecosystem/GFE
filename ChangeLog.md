@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update NVHPC CI (build only)
   - Fix CMake for LLVM Flang
   - Update object library dependency handling
+- Update NVHPC CI build
 
 ## [1.20.0] - 2025-09-30
 
