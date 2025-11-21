@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Set `ENABLE_TESTS` to `ON` for subprojects
+
 ## [1.21.0] - 2025-10-14
 
 ### Changed
