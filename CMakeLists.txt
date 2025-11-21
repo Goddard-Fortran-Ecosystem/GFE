@@ -17,6 +17,9 @@ endif()
 
 enable_testing()
 
+# Pass down option to enable building of tests in subdirectories
+set(ENABLE_TESTS ON CACHE BOOL "Enable building of tests")
+
 add_subdirectory(gFTL)
 add_subdirectory(gFTL-shared)
 add_subdirectory(fArgParse)
