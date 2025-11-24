@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 project (GFE
-  VERSION 1.21.0
+  VERSION 1.22.0
   LANGUAGES Fortran
 )
 cmake_policy(SET CMP0074 NEW)
@@ -16,6 +16,9 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 enable_testing()
+
+# Pass down option to enable building of tests in subdirectories
+set(ENABLE_TESTS ON CACHE BOOL "Enable building of tests")
 
 add_subdirectory(gFTL)
 add_subdirectory(gFTL-shared)
