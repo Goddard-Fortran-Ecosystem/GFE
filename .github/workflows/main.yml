@@ -18,9 +18,9 @@ jobs:
         os: [ubuntu-22.04, ubuntu-24.04, macos-14, macos-15]
         compiler: [gfortran-12, gfortran-13, gfortran-14, gfortran-15]
         # gfortran-10 and -11 are only on ubuntu-22.04
-        # gfortran-13, -14, and -15 are not on ubuntu-22.04
-        # gfortran-15 is only on macos
+        # gfortran-13 and -14 and -15 are not on ubuntu-22.04
         # gfortran-12 is not on macos
+        # gfortran-15 is only on macos
         include:
           - os: ubuntu-22.04
             compiler: gfortran-10
@@ -65,7 +65,7 @@ jobs:
           cmake --version
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           submodules: true
@@ -76,7 +76,7 @@ jobs:
 
       - name: Cache MPI
         id: cache-mpi
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/local/openmpi
           key: mpi-${{ runner.os }}-${{ matrix.os }}-${{ matrix.compiler }}
@@ -114,7 +114,7 @@ jobs:
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Archive log files on failure
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: logfiles-${{ matrix.compiler }}-${{ matrix.os }}
@@ -131,7 +131,7 @@ jobs:
     name: Intel Fortran
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           submodules: true
@@ -185,7 +185,7 @@ jobs:
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Archive log files on failure
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: logfiles-Intel
@@ -198,7 +198,7 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       FC: nvfortran
-      NVHPC_IMAGE: nvcr.io/nvidia/nvhpc:25.7-devel-cuda12.9-ubuntu24.04
+      NVHPC_IMAGE: nvcr.io/nvidia/nvhpc:25.11-devel-cuda13.0-ubuntu24.04
 
     steps:
       # Reclaim lots of space
@@ -229,7 +229,7 @@ jobs:
           docker system prune -af || true
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           submodules: true
@@ -277,7 +277,7 @@ jobs:
 
       - name: Archive log files on failure
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: logfiles-Nvidia
           path: |
@@ -304,7 +304,7 @@ jobs:
           cmake --version
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
           submodules: true
@@ -334,7 +334,7 @@ jobs:
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Archive log files on failure
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: logfiles-Flang
