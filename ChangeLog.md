@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Minor updates to CI
+- Added CMake code to "auto-ignore" build and install directories
 
 ## [1.22.0] - 2025-11 24
 
