@@ -35,6 +35,6 @@ endif()
 
 # Piggyback that file into install
 install(
-   FILES ${PROJECT_BINARY_DIR}/.gitignore
-   DESTINATION ${CMAKE_INSTALL_PREFIX}
-   )
+  FILES ${PROJECT_BINARY_DIR}/.gitignore
+  DESTINATION ${CMAKE_INSTALL_PREFIX}
+)
