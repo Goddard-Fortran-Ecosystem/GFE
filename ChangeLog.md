@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Advanced test filtering with regex and glob patterns
   - Fix automatic rebuild when adding new test files
 - Minor updates to CI
+- Added CMake code to "auto-ignore" build and install directories
 
 ## [1.22.0] - 2025-11 24
 
