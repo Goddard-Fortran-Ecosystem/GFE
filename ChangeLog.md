@@ -5,8 +5,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.23.0] - 2026-02-23
+
 ### Changed
 
+- Update gFTL to v1.17.0
+- Update gFTL-shared to v1.12.0
+- Update fArgParse to v1.11.0
+- Update pFUnit to v4.16.0
+  - Advanced test filtering with regex and glob patterns
+  - Fix automatic rebuild when adding new test files
 - Minor updates to CI
 
 ## [1.22.0] - 2025-11 24
