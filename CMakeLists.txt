@@ -20,6 +20,23 @@ enable_testing()
 # Pass down option to enable building of tests in subdirectories
 set(ENABLE_TESTS ON CACHE BOOL "Enable building of tests")
 
+# Define canonical test targets here before any subproject can claim them.
+# Each subproject uses "if (NOT TARGET tests/build-tests)" guards, so they
+# will skip their own definitions and simply call add_dependencies() against
+# these targets.  This ensures:
+#   - "tests" runs ctest from the correct top-level build directory
+#   - "tests" always depends on "build-tests" (used by pFUnit/yaFyaml)
+#   - "build-tests" compiles all test binaries before ctest is invoked
+if (NOT TARGET build-tests)
+  add_custom_target(build-tests)
+endif()
+if (NOT TARGET tests)
+  add_custom_target(tests
+    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    DEPENDS build-tests)
+endif()
+
 add_subdirectory(gFTL)
 add_subdirectory(gFTL-shared)
 add_subdirectory(fArgParse)
