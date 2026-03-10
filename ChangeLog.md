@@ -5,6 +5,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Define canonical `build-tests` and `tests` CMake targets at the top-level before
+  subprojects can claim them, ensuring `cmake --build --target tests` runs all tests
+  across all subprojects (previously some tests were only reachable via `ctest` directly)
+
+### Changed
+
+- Update CI to add `--schedule-random` to `ctest` run for better test ordering coverage
+
 ## [1.23.0] - 2026-02-23
 
 ### Changed

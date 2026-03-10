@@ -333,8 +333,8 @@ jobs:
           cmake --build build --parallel 4 --target build-tests
           cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
-      - name: Run Ctest
-        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
+      - name: Run Ctest with Random Scheduling
+        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4 --schedule-random
 
       - name: Archive log files on failure
         uses: actions/upload-artifact@v6
