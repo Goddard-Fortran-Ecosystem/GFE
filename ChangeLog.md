@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Update pFlogger to v1.18.0
+  - New accessor and miscellaneous improvements
 - Update CI to add `--schedule-random` to `ctest` run for better test ordering coverage
 
 ## [1.23.0] - 2026-02-23
