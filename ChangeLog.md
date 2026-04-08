@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.24.0] - 2026-04-08
+
 ### Fixed
 
 - Define canonical `build-tests` and `tests` CMake targets at the top-level before
@@ -15,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update pFlogger to v1.18.0
   - New accessor and miscellaneous improvements
+- Update pFUnit to v4.17.0
+  - Update license to Apache 2.0
+  - Test shuffling support to detect hidden test dependencies
+  - Multi-line continuation support for pFUnit macros
 - Update CI to add `--schedule-random` to `ctest` run for better test ordering coverage
 
 ## [1.23.0] - 2026-02-23
