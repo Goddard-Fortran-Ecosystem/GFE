@@ -5,6 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.25.0] - 2026-04-09
+
+### Changed
+
+- Update pFUnit to v4.17.1
+  - Fixes for Fortran continuation lines
+
 ## [1.24.0] - 2026-04-08
 
 ### Fixed
