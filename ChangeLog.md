@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed Fortran continuation lines being incorrectly joined during preprocessing
   - Increased default allocated string length for integers to match that of reals
 - Update CI
-  - Add `macos-26`, update OpenMPI to 5.0.10, re-enable NVHPC job with updated image
+  - Add `macos-26`, update OpenMPI to 5.0.10
   - Add `workflow_dispatch` trigger, weekly scheduled run, and concurrency group
   - Update `actions/upload-artifact` and `actions/checkout` to latest versions
 
