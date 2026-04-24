@@ -9,21 +9,28 @@ on:
       - "**.MD"
       - "LICENCE"
       - "COPYRIGHT"
+  # This is a weekly run to try and keep the MPI caches ... cached
+  schedule:
+    - cron: '00 13 * * 1'
+  # Allow us to trigger it manually
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   GNU:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-22.04, ubuntu-24.04, macos-14, macos-15]
+        os: [ubuntu-22.04, ubuntu-24.04, macos-15, macos-26]
         compiler: [gfortran-12, gfortran-13, gfortran-14, gfortran-15]
-        # gfortran-10 and -11 are only on ubuntu-22.04
+        # gfortran-11 is only on ubuntu-22.04
         # gfortran-13 and -14 and -15 are not on ubuntu-22.04
         # gfortran-12 is not on macos
-        # gfortran-15 is only on macos
+        # gfortran-15 is only on macos (and ubuntu-24.04+ does not have it)
         include:
-          - os: ubuntu-22.04
-            compiler: gfortran-10
           - os: ubuntu-22.04
             compiler: gfortran-11
         exclude:
@@ -35,9 +42,9 @@ jobs:
             compiler: gfortran-15
           - os: ubuntu-24.04
             compiler: gfortran-15
-          - os: macos-14
-            compiler: gfortran-12
           - os: macos-15
+            compiler: gfortran-12
+          - os: macos-26
             compiler: gfortran-12
 
       # fail-fast if set to 'true' here is good for production, but when
@@ -79,12 +86,12 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/local/openmpi
-          key: mpi-${{ runner.os }}-${{ matrix.os }}-${{ matrix.compiler }}
+          key: mpi-${{ matrix.os }}-openmpi-5.0.10
 
       - name: Build MPI
         if: steps.cache-mpi.outputs.cache-hit != 'true'
         run: |
-          sh ${GITHUB_WORKSPACE}/tools/ci-install-mpi.sh openmpi 5.0.2
+          sh ${GITHUB_WORKSPACE}/tools/ci-install-mpi.sh openmpi 5.0.10
 
       - name: Set MPI Environment
         run: |
@@ -114,7 +121,7 @@ jobs:
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Archive log files on failure
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: logfiles-${{ matrix.compiler }}-${{ matrix.os }}
@@ -185,7 +192,7 @@ jobs:
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
 
       - name: Archive log files on failure
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: logfiles-Intel
@@ -198,10 +205,10 @@ jobs:
     runs-on: ubuntu-24.04
     # Turned off for now because NVHPC image is too large for free
     # GitHub Actions runners, but leaving here for when we can run it again
-    if: false
+    if: true
     env:
       FC: nvfortran
-      NVHPC_IMAGE: nvcr.io/nvidia/nvhpc:25.11-devel-cuda13.0-ubuntu24.04
+      NVHPC_IMAGE: nvcr.io/nvidia/nvhpc:26.3-devel-cuda13.1-ubuntu24.04
 
     steps:
       # Reclaim lots of space
@@ -237,8 +244,21 @@ jobs:
           fetch-depth: 1
           submodules: true
 
-      - name: Pull NVHPC image
-        run: docker pull "$NVHPC_IMAGE"
+      - name: Pull NVHPC image (retry)
+        env:
+          DOCKER_CLIENT_TIMEOUT: 600
+          COMPOSE_HTTP_TIMEOUT: 600
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5; do
+            echo "Attempt $i: docker pull $NVHPC_IMAGE"
+            if docker pull "$NVHPC_IMAGE"; then
+              exit 0
+            fi
+            sleep $((i*20))
+          done
+          echo "Docker pull failed after retries"
+          exit 1
 
       # Run everything inside the NVHPC container
       - name: Build (inside NVHPC)
@@ -280,7 +300,7 @@ jobs:
 
       - name: Archive log files on failure
         if: failure()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: logfiles-Nvidia
           path: |
@@ -337,7 +357,7 @@ jobs:
         run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4 --schedule-random
 
       - name: Archive log files on failure
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: logfiles-Flang

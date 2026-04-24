@@ -5,6 +5,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.26.0] - 2026-05-24
+  
+### Changed
+
+- Update pFUnit to v4.18.0
+  - Extended `near()`, `relatively_near()`, and `equal_to()` matchers to support `REAL64` and rank-4 arrays
+  - Fixed `@assertExceptionRaised` to correctly handle successive exception checks in a single test
+  - Fixed Fortran continuation lines being incorrectly joined during preprocessing
+  - Increased default allocated string length for integers to match that of reals
+
 ## [1.25.0] - 2026-04-09
 
 ### Changed

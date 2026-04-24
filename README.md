@@ -9,11 +9,13 @@ This repo is intended to be a single fixture for the [Goddard Fortran Ecosystem]
 | gFTL        | v1.17.0    |
 | gFTL-shared | v1.12.0    |
 | fArgParse   | v1.11.0    |
-| pFUnit      | v4.17.1    |
+| pFUnit      | v4.18.0    |
 | yaFyaml     | v1.6.0     |
 | pFlogger    | v1.18.0    |
 
 ## Set up
+
+### Obtaining the Source
 
 Clone the repository and update the submodules. Note that the `--recursive` flag to `git submodule update` is not required:
 ```console
@@ -22,28 +24,32 @@ $ cd GFE
 $ git submodule update --init     # don't need --recursive
 ```
 
-Create a build directory, and configure the build. Set `CMAKE_INSTALL_PREFIX` to a path that GFE libraries should be installed to.
+### Configuring
+
+Configure the build, setting the install prefix to a path where the GFE libraries should be installed.
 
 ```console
-$ mkdir build/
-$ cd build/
-$ cmake .. -DCMAKE_INSTALL_PREFIX=/my/software
+$ cmake -B build --install-prefix /my/software
 ...
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/user/GFE/build
 ```
 
-Compile all the GFE libraries
+### Building
+
+Compile all the GFE libraries:
 
 ```console
-$ make -j6
+$ cmake --build build -j6
 ```
 
-and lastly install (necessary for testing):
+### Installing
+
+Install the GFE libraries (necessary for testing):
 
 ```console
-$ make install
+$ cmake --install build
 ```
 
 ### Testing
@@ -51,7 +57,7 @@ $ make install
 The GFE libraries use the pFUnit unit testing framework. pFUnit is a GFE library itself, so to set up and run the GFE tests we need to build the tests against our installation (previous step). Point CMake to your GFE install prefix with `CMAKE_PREFIX_PATH`. Builds are enabled by setting `BUILD_TESTING` to a true boolean.
 
 ```console
-$ cmake .. -DCMAKE_PREFIX_PATH=/my/software
+$ cmake -B build -DCMAKE_PREFIX_PATH=/my/software
 ...
 -- Configuring done
 -- Generating done
@@ -60,14 +66,13 @@ $ cmake .. -DCMAKE_PREFIX_PATH=/my/software
 
 Compile the tests:
 ```console
-$ make -j20 tests
+$ cmake --build build -j20 --target tests
 ```
 
 Finally, the tests can be executed like so
 
 ```console
-$ ctest
-ctest
+$ ctest --test-dir build
 Test project /home/user/GFE/build
 [ 14%] Built target generate-type-incs
 [ 17%] Built target generate-template-incs
