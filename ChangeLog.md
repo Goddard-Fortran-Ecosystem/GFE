@@ -5,6 +5,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.27.0] - 2026-05-06
+
+### Changed
+
+- Update pFlogger to v1.18.1
+  - Fix broken pointer-parent chain
+- Update pFUnit to v4.18.1
+  - Workaround for GCC 16.1
+
 ## [1.26.0] - 2026-05-24
   
 ### Changed
