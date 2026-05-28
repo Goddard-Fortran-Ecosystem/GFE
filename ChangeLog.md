@@ -5,6 +5,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.28.0] - 2026-05-28
+
+### Changed
+
+- Update pFUnit to v4.19.0
+  - Improved XML output for better integration with CI tools.
+  - Workaround for flang regression in parameterized tests
+  - Fixes for TAP output
+
 ## [1.27.0] - 2026-05-06
 
 ### Changed
