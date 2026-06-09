@@ -15,8 +15,6 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     message(STATUS "*** Override with -DCMAKE_INSTALL_PREFIX=<path>.")
 endif()
 
-# trivial edit to trigger CI
-
 enable_testing()
 
 # Pass down option to enable building of tests in subdirectories
