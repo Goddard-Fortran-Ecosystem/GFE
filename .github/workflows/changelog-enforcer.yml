@@ -19,4 +19,3 @@ jobs:
             used. If your change is very trivial not applicable for a
             changelog entry, add a 'skip changelog' label to the pull
             request to skip the changelog enforcer.
-
