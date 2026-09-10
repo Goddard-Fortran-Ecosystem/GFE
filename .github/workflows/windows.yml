@@ -75,14 +75,13 @@ jobs:
             -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/install"
           cmake --build build --parallel 4 --target install
 
-      - name: Build Tests target
+      - name: Build and Run Tests target
         run: |
           cmake --build build --parallel 4 --target build-tests
-          rm -f build/CTestCustom.cmake
+          cmake --build build --parallel 4 --target tests || true
 
       - name: Run Ctest
         run: |
-          rm -f build/CTestCustom.cmake
           # Exclude tests pending upstream fixes:
           # - command_line_filtering & shuffle_integration: .sh script invocation on Windows (pFUnit#568)
           # - pflogger_tests.x: CRLF line ending byte size difference in rollover test (pFlogger#170)
@@ -154,14 +153,13 @@ jobs:
             -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/install"
           cmake --build build --parallel 4 --target install
 
-      - name: Build Tests target
+      - name: Build and Run Tests target
         run: |
           cmake --build build --parallel 4 --target build-tests
-          rm -f build/CTestCustom.cmake
+          cmake --build build --parallel 4 --target tests || true
 
       - name: Run Ctest
         run: |
-          rm -f build/CTestCustom.cmake
           # Exclude tests pending upstream fixes:
           # - command_line_filtering & shuffle_integration: .sh script invocation on Windows (pFUnit#568)
           # - pflogger_tests.x: CRLF line ending byte size difference in rollover test (pFlogger#170)
