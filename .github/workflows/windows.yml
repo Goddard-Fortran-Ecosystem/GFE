@@ -9,6 +9,8 @@ on:
       - "**.MD"
       - "LICENCE"
       - "COPYRIGHT"
+  # Allow the scheduled workflow to reuse this test matrix if needed.
+  workflow_call:
   # Allow us to trigger it manually
   workflow_dispatch:
 
@@ -26,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
           submodules: true
@@ -61,7 +63,7 @@ jobs:
             -DSKIP_ROBUST=YES \
             -DCMAKE_INSTALL_PREFIX="${GITHUB_WORKSPACE}/install" \
             -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/install"
-          cmake --build build --target install
+          cmake --build build --parallel 4 --target install
           cmake -B build -G "Ninja" \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
@@ -71,15 +73,18 @@ jobs:
             -DSKIP_ROBUST=YES \
             -DCMAKE_INSTALL_PREFIX="${GITHUB_WORKSPACE}/install" \
             -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/install"
-          cmake --build build --target install
+          cmake --build build --parallel 4 --target install
 
       - name: Build and Run Tests target
         run: |
-          cmake --build build --target build-tests
-          cmake --build build --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
+          cmake --build build --parallel 4 --target build-tests
+          rm -f build/CTestCustom.cmake
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 4 --output-on-failure --repeat until-pass:4
 
       - name: Run Ctest
-        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
+        run: |
+          rm -f build/CTestCustom.cmake
+          ctest --test-dir build --parallel 4 --output-on-failure --repeat until-pass:4
 
       - name: Archive log files on failure
         uses: actions/upload-artifact@v7
@@ -98,7 +103,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
           submodules: true
@@ -136,7 +141,7 @@ jobs:
             -DSKIP_ROBUST=YES \
             -DCMAKE_INSTALL_PREFIX="${GITHUB_WORKSPACE}/install" \
             -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/install"
-          cmake --build build --target install
+          cmake --build build --parallel 4 --target install
           cmake -B build -G "Ninja" \
             -DCMAKE_Fortran_COMPILER=ifx \
             -DCMAKE_C_COMPILER=cl \
@@ -145,15 +150,18 @@ jobs:
             -DSKIP_ROBUST=YES \
             -DCMAKE_INSTALL_PREFIX="${GITHUB_WORKSPACE}/install" \
             -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/install"
-          cmake --build build --target install
+          cmake --build build --parallel 4 --target install
 
       - name: Build and Run Tests target
         run: |
-          cmake --build build --target build-tests
-          cmake --build build --target tests || ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
+          cmake --build build --parallel 4 --target build-tests
+          rm -f build/CTestCustom.cmake
+          cmake --build build --parallel 4 --target tests || ctest --test-dir build --parallel 4 --output-on-failure --repeat until-pass:4
 
       - name: Run Ctest
-        run: ctest --test-dir build --parallel 1 --output-on-failure --repeat until-pass:4
+        run: |
+          rm -f build/CTestCustom.cmake
+          ctest --test-dir build --parallel 4 --output-on-failure --repeat until-pass:4
 
       - name: Archive log files on failure
         uses: actions/upload-artifact@v7
