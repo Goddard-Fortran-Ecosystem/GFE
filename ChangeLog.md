@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updates for new flang docker image
+- Update CI workflows
+  - Separate scheduled runs from pull-request CI
+  - Update GitHub Actions to current major versions
 
 ## [1.28.0] - 2026-05-28
 
@@ -452,4 +455,3 @@ Initial release
 | yaFyaml     | v1.0-beta8 |
 | pFlogger    | v1.8.0 |
 | pFUnit      | v4.2.5 |
-
