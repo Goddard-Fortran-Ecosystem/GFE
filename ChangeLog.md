@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- CI testing on Windows for GNU (gfortran) and Intel (ifx)
+
 ## [1.29.0] - 2026-09-10
 
 ### Changed
