@@ -5,6 +5,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.29.0] - 2026-09-10
+
+### Changed
+
+- Update fArgParse to v1.12.0
+  - Fixes for Intel compilers on Windows
+- Update pFUnit to v4.20.0
+  - Fixes for Intel compilers on Windows
+- Update yaFyaml to v1.7.0
+  - Fixes for Intel compilers on Windows
+- Update pFlogger to v1.19.0
+  - Fixes for Intel compilers on Windows
+
 ### Changed
 
 - Updates for new flang docker image
