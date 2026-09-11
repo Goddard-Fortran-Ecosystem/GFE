@@ -82,10 +82,7 @@ jobs:
 
       - name: Run Ctest
         run: |
-          # Exclude tests pending upstream fixes:
-          # - command_line_filtering & shuffle_integration: .sh script invocation on Windows (pFUnit#568)
-          # - pflogger_tests.x: CRLF line ending byte size difference in rollover test (pFlogger#170)
-          ctest --test-dir build --parallel 4 --output-on-failure --repeat until-pass:4 -E "(command_line_filtering|shuffle_integration|pflogger_tests)"
+          ctest --test-dir build --parallel 4 --output-on-failure --repeat until-pass:4
 
       - name: Archive log files on failure
         uses: actions/upload-artifact@v7
@@ -160,10 +157,7 @@ jobs:
 
       - name: Run Ctest
         run: |
-          # Exclude tests pending upstream fixes:
-          # - command_line_filtering & shuffle_integration: .sh script invocation on Windows (pFUnit#568)
-          # - pflogger_tests.x: CRLF line ending byte size difference in rollover test (pFlogger#170)
-          ctest --test-dir build --parallel 4 --output-on-failure --repeat until-pass:4 -E "(command_line_filtering|shuffle_integration|pflogger_tests)"
+          ctest --test-dir build --parallel 4 --output-on-failure --repeat until-pass:4
 
       - name: Archive log files on failure
         uses: actions/upload-artifact@v7
