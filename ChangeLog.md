@@ -5,6 +5,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- CI testing on Windows for GNU (gfortran) and Intel (ifx)
+
+### Changed
+
+- Update pFUnit to v4.20.1
+  - Further fixes for Windows
+- Update yaFyaml to v1.7.2
+  - Fix for block sequences
+  - Further fixes for Windows
+- Update pFlogger to v1.19.1
+  - Further fixes for Windows
+- Update CI workflows
+  - Separate scheduled runs from pull-request CI
+  - Update GitHub Actions to current major versions
+
 ## [1.29.0] - 2026-09-10
 
 ### Changed
@@ -448,4 +465,3 @@ Initial release
 | yaFyaml     | v1.0-beta8 |
 | pFlogger    | v1.8.0 |
 | pFUnit      | v4.2.5 |
-

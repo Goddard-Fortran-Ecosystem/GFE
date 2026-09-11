@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 project (GFE
-  VERSION 1.29.0
+  VERSION 1.30.0
   LANGUAGES Fortran
 )
 cmake_policy(SET CMP0074 NEW)
@@ -43,6 +43,11 @@ add_subdirectory(fArgParse)
 add_subdirectory(pFUnit)
 add_subdirectory(yaFyaml)
 add_subdirectory(pFlogger)
+
+# Since GFE's 'tests' target already depends on 'build-tests', CTestCustom.cmake is not needed.
+if (EXISTS "${PROJECT_BINARY_DIR}/CTestCustom.cmake")
+  file(REMOVE "${PROJECT_BINARY_DIR}/CTestCustom.cmake")
+endif()
 
 # https://www.scivision.dev/cmake-auto-gitignore-build-dir/
 # --- auto-ignore build directory
