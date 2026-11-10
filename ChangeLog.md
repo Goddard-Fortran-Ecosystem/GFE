@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update yaFyaml to v1.7.3
+  - Further fixes for Windows
+
 ## [1.30.0] - 2026-09-11
 
 ### Added
