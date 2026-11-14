@@ -5,11 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.31.0] - 2026-11-12
+## [1.31.0] - 2026-11-13
 
 ### Changed
 
-- Update pFUnit to v4.21.0
+- Update pFUnit to v4.22.0
+  - Add `propagate` for exceptions that pass up a call stack, with a traceback
+  - Add `@assertExceptionMatches` to catch expected exceptions by regular expression
   - CTest command-line arguments and build fixes
   - Portability fixes and improved Windows diagnostics
 - Update yaFyaml to v1.7.3
