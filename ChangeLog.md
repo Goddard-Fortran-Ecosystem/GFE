@@ -5,6 +5,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.31.0] - 2026-11-12
+
+### Changed
+
+- Update pFUnit to v4.21.0
+  - CTest command-line arguments and build fixes
+  - Portability fixes and improved Windows diagnostics
+- Update yaFyaml to v1.7.3
+  - Further fixes for Windows
+
 ## [1.30.0] - 2026-09-11
 
 ### Added

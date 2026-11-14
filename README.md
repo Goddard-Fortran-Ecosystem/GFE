@@ -9,8 +9,8 @@ This repo is intended to be a single fixture for the [Goddard Fortran Ecosystem]
 | gFTL        | v1.17.0    |
 | gFTL-shared | v1.12.0    |
 | fArgParse   | v1.12.0    |
-| pFUnit      | v4.20.1    |
-| yaFyaml     | v1.7.2     |
+| pFUnit      | v4.21.0    |
+| yaFyaml     | v1.7.3     |
 | pFlogger    | v1.19.1    |
 
 ## Set up
